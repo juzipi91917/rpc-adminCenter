@@ -6,8 +6,8 @@ Etcd:
   Key: test.admin.rpc
   User: root
   Pass: admin
-DBX: /rpc-clipfilm/test/dbx
+DBX: /rpc-admin/test/dbx
 RedisX: /test/redis
-RabbitMqX: /rpc-clipfilm/Ali
+RabbitMqX: /rpc-admin/Ali
 Mode: dev
 Timeout: 3000
