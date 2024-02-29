@@ -8,6 +8,6 @@ Etcd:
   Pass: admin
 DBX: /rpc-admin/test/dbx
 RedisX: /test/redis
-RabbitMqX: /rpc-admin/Ali
+RabbitMqX: /test/rabbitmq
 Mode: dev
 Timeout: 3000
