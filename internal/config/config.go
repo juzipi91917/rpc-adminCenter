@@ -3,7 +3,7 @@ package config
 import (
 	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/mysqlx"
 	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rabbitmqx"
-	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-clipFilm/internal/model/entity"
+	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter/internal/model/entity"
 	"context"
 	"encoding/json"
 	"github.com/go-redis/redis/v8"
@@ -26,8 +26,6 @@ type (
 		DBX       string
 		RedisX    string
 		RabbitMqX string
-		AliX      string
-		TikTokX   string
 	}
 
 	DBX struct {
@@ -47,22 +45,6 @@ type (
 		Port        int    `json:"port"`
 		User        string `json:"user"`
 		VirtualHost string `json:"virtualHost"`
-	}
-	Ali struct {
-		Cloud struct {
-			AccessKeyId     string `json:"AccessKeyId"`
-			AccessKeySecret string `json:"AccessKeySecret"`
-		}
-		Oss struct {
-			PublicEndpoint  string `json:"PublicEndpoint"`
-			PrivateEndpoint string `json:"PrivateEndpoint"`
-			Bucket          string `json:"Bucket"`
-		}
-		NotifyUrl string `json:"NotifyUrl"`
-	}
-	Tiktok struct {
-		Url               string `json:"url"`
-		BillboardMusicUrn string `json:"billboard_music_urn"`
 	}
 )
 
@@ -96,17 +78,17 @@ func Init() (config *Config) {
 				env := os.Getenv("environ")
 				switch env {
 				case service.ProMode:
-					filePath, err = filepath.Abs("etc/release.clipfilm.yaml")
+					filePath, err = filepath.Abs("etc/release.admin.yaml")
 					if err != nil {
 						panic(err)
 					}
 				case service.TestMode:
-					filePath, err = filepath.Abs("etc/test.clipfilm.yaml")
+					filePath, err = filepath.Abs("etc/test.admin.yaml")
 					if err != nil {
 						panic(err)
 					}
 				default:
-					filePath, err = filepath.Abs("etc/clipfilm.yaml")
+					filePath, err = filepath.Abs("etc/admin.yaml")
 					if err != nil {
 						panic(err)
 					}
@@ -192,30 +174,6 @@ func getRedis(config Config) (redisX *RedisX) {
 	return
 }
 
-func GetAli(config Config) (ali *Ali) {
-	aliResp, err := etcdClient.Get(context.Background(), config.AliX)
-	if err != nil {
-		panic(err)
-	}
-	ali = &Ali{}
-	if err = json.Unmarshal(aliResp.Kvs[0].Value, ali); err != nil {
-		panic(err)
-	}
-	return
-}
-
-func GetTiktok(config Config) (tiktok *Tiktok) {
-	tiktokResp, err := etcdClient.Get(context.Background(), config.TikTokX)
-	if err != nil {
-		panic(err)
-	}
-	tiktok = &Tiktok{}
-	if err = json.Unmarshal(tiktokResp.Kvs[0].Value, tiktok); err != nil {
-		panic(err)
-	}
-	return
-}
-
 func getRabbitMq(config Config) (rabbitMqX *RabbitMqX) {
 	rabbitResp, err := etcdClient.Get(context.Background(), config.RabbitMqX)
 	if err != nil {
@@ -278,27 +236,14 @@ func initDB(env string, db *DBX) *gorm.DB {
 	logx.Info("successfully connect mysql client")
 
 	if env != service.ProMode {
-		_ = dBClient.Set("gorm:table_options", "COMMENT='背景音乐表'").AutoMigrate(&entity.Bgm{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='背景音乐类型表'").AutoMigrate(&entity.BgmClass{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='自定义滤镜表'").AutoMigrate(&entity.FilterCustom{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='字体表'").AutoMigrate(&entity.Font{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='花字参数表'").AutoMigrate(&entity.SellingPoint{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='花字背景图表'").AutoMigrate(&entity.SellingPointImage{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='字幕描边表'").AutoMigrate(&entity.SubtitleStyle{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='文案字幕表'").AutoMigrate(&entity.Paperwork{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='违禁词表'").AutoMigrate(&entity.ForbiddenWord{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='操作日志表'").AutoMigrate(&entity.OperateLog{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='多音字替换表'").AutoMigrate(&entity.PolyphonicSubstitution{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='配置表'").AutoMigrate(&entity.Conf{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='视频处理任务表'").AutoMigrate(&entity.Task{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='视频处理请求表'").AutoMigrate(&entity.TaskDetail{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='视频处理记录表'").AutoMigrate(&entity.TaskProcess{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='视频处理文案使用表'").AutoMigrate(&entity.TaskPaperwork{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='视频模板表'").AutoMigrate(&entity.Template{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='用户视频模板表'").AutoMigrate(&entity.UserTemplate{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='用户文案表'").AutoMigrate(&entity.UserPaperwork{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='用户bgm表'").AutoMigrate(&entity.UserBgm{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='发音人表'").AutoMigrate(&entity.SoundPeople{})
+		_ = dBClient.Set("gorm:table_options", "COMMENT='后台用户表'").AutoMigrate(&entity.Admin{})
+		_ = dBClient.Set("gorm:table_options", "COMMENT='用户详情表'").AutoMigrate(&entity.AdminInfo{})
+		_ = dBClient.Set("gorm:table_options", "COMMENT='用户角色表'").AutoMigrate(&entity.AdminRole{})
+		_ = dBClient.Set("gorm:table_options", "COMMENT='用户角色权限表'").AutoMigrate(&entity.AdminRolePermission{})
+		_ = dBClient.Set("gorm:table_options", "COMMENT='菜单表'").AutoMigrate(&entity.Menu{})
+		_ = dBClient.Set("gorm:table_options", "COMMENT='权限表'").AutoMigrate(&entity.Permission{})
+		_ = dBClient.Set("gorm:table_options", "COMMENT='角色表'").AutoMigrate(&entity.Role{})
+		_ = dBClient.Set("gorm:table_options", "COMMENT='角色权限表'").AutoMigrate(&entity.RolePermission{})
 	}
 
 	return dBClient

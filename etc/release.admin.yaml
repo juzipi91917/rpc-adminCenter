@@ -1,0 +1,13 @@
+Name: release.admin.rpc
+ListenOn: 0.0.0.0:20000
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: release.admin.rpc
+  User: root
+  Pass: admin
+DBX: release.admin.db
+RedisX: release.redis
+RabbitMqX: release.rabbitmq
+Mode: dev
+Timeout: 60000 # 30s，api请求的响应超时时间，若超过30s还未返回则结束请求。该超时时间会被api层初始化的的context作为超时时间进行设置，若再新建一个context则不会被使用，而使用默认或自定义的超时时间

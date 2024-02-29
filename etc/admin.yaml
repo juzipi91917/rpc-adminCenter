@@ -1,0 +1,13 @@
+Name: dev.admin.rpc
+ListenOn: 0.0.0.0:20000
+Etcd:
+  Hosts:
+    - 192.168.110.237:2379
+  Key: dev.admin.rpc
+  User: root
+  Pass: admin
+DBX: /rpc-adminCenter/dev/dbx
+RedisX: dev.redis
+RabbitMqX: dev.rabbitmq
+Mode: dev
+Timeout: 60000 # 30s，api请求的响应超时时间，若超过30s还未返回则结束请求。该超时时间会被api层初始化的的context作为超时时间进行设置，若再新建一个context则不会被使用，而使用默认或自定义的超时时间
