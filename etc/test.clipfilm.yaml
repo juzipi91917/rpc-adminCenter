@@ -1,0 +1,13 @@
+Name: rpcclipfilm
+ListenOn: 0.0.0.0:8000
+DBX: /rpc-clipfilm/test/dbx
+RedisX: /test/redis
+RabbitMqX: /test/rabbitmq
+Mode: dev
+Etcd:
+  Hosts:
+    - http://qa-etcd.aiygkj.com:2379
+  Key: test.clipfilm.rpc
+  User: root
+  Pass: admin
+AliX: /rpc-clipfilm/Ali

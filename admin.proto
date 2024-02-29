@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package clipFilm;
+option go_package="./clipFilm";
+
+message Empty {}
+
+
+// aigc生成后调用服务
+message AIGCCallBackRequest {
+    int64 ProcessId = 1; // 任务id
+    string Content = 2; // 内容
+}
+
+// aigc生成后调用服务响应
+message AIGCCallBackResponse {
+  bool status = 1;  // 返回状态
+}
+
+// 音频合成后调用服务
+message VoiceCallBackRequest {
+  int64 ProcessId = 1; // 任务id
+  repeated VoiceData VoiceData = 2; // 音频数据
+  repeated AIGCData AIGCData = 3; // aigc分段
+}
+
+message AIGCData {
+  int64 index = 1;
+  string Content = 2; // 内容
+  int64 BeginTime = 3; // 开始时间
+  int64 EndTime = 4; // 结束时间
+}
+
+message VoiceData {
+  string VoiceBucket = 1; // Bucket
+  string VoicePath = 2; // Path
+  int64 Index = 3; // Path
+  int64 BeginTime = 4; // Path
+  int64 EndTime = 5; // Path
+}
+
+
+// 音频合成后调用服务响应
+message VoiceCallBackResponse {
+  bool status = 1;  // 返回状态
+}
+
+// 视频分割后调用
+message VideoCallBackRequest {
+  int64 ProcessId = 1; // 任务id
+  repeated VideoData VideoData = 2; // 视频分割片段
+}
+
+message VideoData {
+  repeated SegmentationVideo VideoData = 1;
+}
+
+message SegmentationVideo {
+  int64 Index = 1;
+  string VideoBucket = 2; // bucket
+  string VideoPath = 3; // path
+  int64 Duration = 4; // 时长
+}
+
+// 视频分割后调用响应
+message VideoCallBackResponse {
+  bool status = 1;  // 返回状态
+}
+
+// rpc调用相关服务
+service RpcCallBackService {
+  rpc AIGCCallBack(AIGCCallBackRequest) returns(AIGCCallBackResponse); // aigc生成后调用服务
+  rpc VoiceCallBack(VoiceCallBackRequest) returns(VoiceCallBackResponse); // 音频合成后调用服务
+  rpc VideoCallBack(VideoCallBackRequest) returns(VideoCallBackResponse); // 视频分割后调用
+}

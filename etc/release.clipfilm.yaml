@@ -1,0 +1,13 @@
+Name: rpcclipfilm
+ListenOn: 0.0.0.0:20001
+DBX: release.clipfilm.db
+RedisX: release.redis
+RabbitMqX: release.rabbitmq
+Mode: dev
+Etcd:
+  Hosts:
+    - http://qa-etcd.huabanshou.cn:2379
+  Key: release.clipfilm.rpc
+  User: root
+  Pass: admin
+AliX: /rpc-clipfilm/Ali
