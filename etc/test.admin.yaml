@@ -1,13 +1,13 @@
 Name: test.admin.rpc
-ListenOn: 0.0.0.0:20000
+ListenOn: 0.0.0.0:8000
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - http://qa-etcd.aiygkj.com:2379
   Key: test.admin.rpc
   User: root
   Pass: admin
-DBX: test.admin.db
-RedisX: test.redis
-RabbitMqX: test.rabbitmq
+DBX: /rpc-clipfilm/test/dbx
+RedisX: /test/redis
+RabbitMqX: /rpc-clipfilm/Ali
 Mode: dev
-Timeout: 60000 # 30s，api请求的响应超时时间，若超过30s还未返回则结束请求。该超时时间会被api层初始化的的context作为超时时间进行设置，若再新建一个context则不会被使用，而使用默认或自定义的超时时间
+Timeout: 3000
