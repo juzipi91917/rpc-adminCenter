@@ -17,6 +17,7 @@ type (
 	AddAdminResponse              = admin.AddAdminResponse
 	AddMenuRequest                = admin.AddMenuRequest
 	AddMenuResponse               = admin.AddMenuResponse
+	AddOperationLogRequest        = admin.AddOperationLogRequest
 	AddPermissionRequest          = admin.AddPermissionRequest
 	AddPermissionResponse         = admin.AddPermissionResponse
 	AddRoleRequest                = admin.AddRoleRequest
@@ -52,6 +53,7 @@ type (
 	UpdateAdminResponse           = admin.UpdateAdminResponse
 	UpdateMenuRequest             = admin.UpdateMenuRequest
 	UpdateMenuResponse            = admin.UpdateMenuResponse
+	UpdateOperationLogRequest     = admin.UpdateOperationLogRequest
 	UpdatePermissionRequest       = admin.UpdatePermissionRequest
 	UpdatePermissionResponse      = admin.UpdatePermissionResponse
 	UpdateRoleRequest             = admin.UpdateRoleRequest

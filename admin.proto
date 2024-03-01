@@ -160,7 +160,7 @@ message DelRolePermissionResponse {}
 // 后台权限管理相关服务
 service PermissionService {
   rpc AddMenu(AddMenuRequest) returns(AddMenuResponse); // 添加菜单
-  rpc UpdateMenu(UpdateMenuRequest) returns(UpdateMenuResponse); // 修改改单
+  rpc UpdateMenu(UpdateMenuRequest) returns(UpdateMenuResponse); // 修改菜单
   rpc GetMenuList(GetMenuListRequest) returns(GetMenuListResponse); // 获取菜单列表
   rpc AddPermission(AddPermissionRequest) returns(AddPermissionResponse); // 添加权限
   rpc UpdatePermission(UpdatePermissionRequest) returns(UpdatePermissionResponse); // 修改权限
@@ -178,4 +178,40 @@ service PermissionService {
   rpc BindRolePermission(BindRolePermissionRequest) returns(BindRolePermissionResponse); // 给角色分配权限
   rpc DelAdminRole(DelAdminRoleRequest) returns(DelAdminRoleResponse); // 删除用户角色
   rpc DelRolePermission(DelRolePermissionRequest) returns(DelRolePermissionResponse); // 删除角色权限
+}
+
+
+message AddOperationLogRequest {
+  string OperationType = 1; // 操作类型
+  int64 AdminId = 2; // 操作人id
+  string OperatorName = 3; // 操作人姓名
+  string OperationDesc = 4; // 操作描述
+  string ModuleName = 5; // 模块名称
+  string Route = 6; // 路由
+  string OperatorIp = 7; // 操作ip
+  string Content = 8; // 操作内容
+  int32 State = 9; // 操作内容
+  string ErrMsg = 10; // 操作异常信息
+}
+
+
+message UpdateOperationLogRequest {
+  string OperationType = 1; // 操作类型
+  int64 AdminId = 2; // 操作人id
+  string OperatorName = 3; // 操作人姓名
+  string OperationDesc = 4; // 操作描述
+  string ModuleName = 5; // 模块名称
+  string Route = 6; // 路由
+  string OperatorIp = 7; // 操作ip
+  string Content = 8; // 操作内容
+  int32 State = 9; // 操作内容
+  string ErrMsg = 10; // 操作异常信息
+  int64 Id = 11; // id
+}
+
+
+// 操作日志相关服务
+service OperationLogService {
+  rpc AddOperationLog(AddOperationLogRequest) returns(Empty); // 添加操作日志
+  rpc UpdateOperationLog(UpdateOperationLogRequest) returns(Empty); // 修改操作日志状态
 }
