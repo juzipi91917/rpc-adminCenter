@@ -87,6 +87,11 @@ func Init() (config *Config) {
 					if err != nil {
 						panic(err)
 					}
+				case service.PreMode:
+					filePath, err = filepath.Abs("etc/pre.admin.yaml")
+					if err != nil {
+						panic(err)
+					}
 				default:
 					filePath, err = filepath.Abs("etc/admin.yaml")
 					if err != nil {
@@ -239,7 +244,6 @@ func initDB(env string, db *DBX) *gorm.DB {
 		_ = dBClient.Set("gorm:table_options", "COMMENT='后台用户表'").AutoMigrate(&entity.Admin{})
 		_ = dBClient.Set("gorm:table_options", "COMMENT='用户详情表'").AutoMigrate(&entity.AdminInfo{})
 		_ = dBClient.Set("gorm:table_options", "COMMENT='用户角色表'").AutoMigrate(&entity.AdminRole{})
-		_ = dBClient.Set("gorm:table_options", "COMMENT='用户角色权限表'").AutoMigrate(&entity.AdminRolePermission{})
 		_ = dBClient.Set("gorm:table_options", "COMMENT='菜单表'").AutoMigrate(&entity.Menu{})
 		_ = dBClient.Set("gorm:table_options", "COMMENT='权限表'").AutoMigrate(&entity.Permission{})
 		_ = dBClient.Set("gorm:table_options", "COMMENT='角色表'").AutoMigrate(&entity.Role{})

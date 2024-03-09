@@ -1,9 +1,9 @@
-Name: test.admin.rpc
+Name: pre.admin.rpc
 ListenOn: 0.0.0.0:20000
 Etcd:
   Hosts:
     - 192.168.110.21:12379
-  Key: test.admin.rpc
+  Key: pre.admin.rpc
   User: root
   Pass: admin
 DBX: /rpc-admin/test/dbx
