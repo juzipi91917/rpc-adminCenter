@@ -49,6 +49,7 @@ type (
 	LogOnRequest                  = admin.LogOnRequest
 	LogOnResponse                 = admin.LogOnResponse
 	MenuInfo                      = admin.MenuInfo
+	PermissionInfo                = admin.PermissionInfo
 	RefreshTokenRequest           = admin.RefreshTokenRequest
 	RefreshTokenResponse          = admin.RefreshTokenResponse
 	UpdateAdminRequest            = admin.UpdateAdminRequest

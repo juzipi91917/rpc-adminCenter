@@ -47,6 +47,8 @@ service AdminService {
 }
 
 
+
+
 message AdminInfo {
   int64 Id = 1;
   string Name = 2;
@@ -70,6 +72,22 @@ message MenuInfo {
   int64 UpdatedAt = 9;
 }
 
+message PermissionInfo {
+  int64 Id = 1;
+  int64 CreatedAt = 2;
+  int64 UpdatedAt = 3;
+  int32 State = 4;
+  int64 MenuId = 5;
+  string Name = 6;
+  string Route = 7;
+  string Remarks = 8;
+}
+
+
+
+
+
+
 // 后台添加菜单
 message AddMenuRequest {
   int64 Id = 1;
@@ -84,7 +102,7 @@ message AddMenuRequest {
 
 // 后台添加菜单
 message AddMenuResponse {
-  int64 id = 1;
+  int64 Id = 1;
 }
 
 // 后台修改菜单
@@ -100,14 +118,14 @@ message UpdateMenuRequest {
 
 // 后台修改菜单
 message UpdateMenuResponse {
-  int64 row = 1;
+  int64 Row = 1;
 }
 
 // 后台获取菜单列表
 message GetMenuListRequest {
   int64 Page = 1;
   int64 PageSize = 2;
-  int32 status = 3;
+  int32 Status = 3;
 }
 
 // 后台获取菜单列表
@@ -143,14 +161,22 @@ message UpdatePermissionRequest {
 
 // 后台修改权限
 message UpdatePermissionResponse {
-  int64 row = 1;
+  int64 Row = 1;
 }
 
 // 后台获取权限列表
-message GetPermissionListRequest {}
+message GetPermissionListRequest {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int32 Status = 3;
+}
 
 // 后台添加角色
-message GetPermissionListResponse {}
+message GetPermissionListResponse {
+  repeated PermissionInfo List = 1;
+  int64 Total = 2;
+  int64 Page = 3;
+}
 
 // 后台添加角色
 message AddRoleRequest {}
