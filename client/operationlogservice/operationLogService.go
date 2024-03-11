@@ -48,6 +48,7 @@ type (
 	GetRolePermissionListResponse = admin.GetRolePermissionListResponse
 	LogOnRequest                  = admin.LogOnRequest
 	LogOnResponse                 = admin.LogOnResponse
+	MenuInfo                      = admin.MenuInfo
 	RefreshTokenRequest           = admin.RefreshTokenRequest
 	RefreshTokenResponse          = admin.RefreshTokenResponse
 	UpdateAdminRequest            = admin.UpdateAdminRequest

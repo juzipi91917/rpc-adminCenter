@@ -40,6 +40,7 @@ func (l *AddMenuLogic) AddMenu(in *admin.AddMenuRequest) (*admin.AddMenuResponse
 		Route:     in.Route,
 		PId:       in.Pid,
 		LevelIds:  in.LevelIds,
+		State:     &in.State,
 		Remarks:   in.Remarks,
 	})
 
