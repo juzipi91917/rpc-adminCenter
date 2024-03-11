@@ -28,16 +28,7 @@ func NewGetAdminListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetA
 
 func (l *GetAdminListLogic) GetAdminList(in *admin.GetAdminListRequest) (*admin.GetAdminListResponse, error) {
 
-	var state *int32
-
-	// 传0或者不传State字段都是查询所有
-	if in.State != 0 {
-		state = &in.State
-	} else {
-		state = nil
-	}
-
-	list, count, err := l.AdminDao.GetPageList(l.ctx, in.GetPage(), in.GetPageSize(), &entity.Admin{State: state})
+	list, count, err := l.AdminDao.GetPageList(l.ctx, in.GetPage(), in.GetPageSize(), &entity.Admin{State: &in.State})
 
 	if err != nil {
 		l.Errorf("获取管理员列表失败,err:%+v", err)

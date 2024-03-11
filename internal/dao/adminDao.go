@@ -46,3 +46,9 @@ func (f *AdminDao) GetPageList(ctx context.Context, page, pageSize int64, where 
 	}
 	return list, count, nil
 }
+
+// Update -
+func (f *AdminDao) Update(ctx context.Context, where, date *entity.Admin) (row int64, err error) {
+	tx := f.DB.GetClient().Where(where).Updates(date)
+	return tx.RowsAffected, tx.Error
+}

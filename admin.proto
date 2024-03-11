@@ -130,16 +130,25 @@ message AddAdminResponse {
 }
 
 // 后台修改用户信息
-message UpdateAdminRequest {}
+message UpdateAdminRequest {
+  optional int64 Id = 1;
+  optional int32 State = 3;
+  optional string Account = 4;
+  optional string Password = 5;
+  optional string Mobile = 6;
+  optional string Name = 7;
+}
 
 // 后台修改用户信息
-message UpdateAdminResponse {}
+message UpdateAdminResponse {
+  int64 row = 1;
+}
 
 // 获取admin列表
 message GetAdminListRequest {
   int64 Page = 1;
   int64 PageSize = 2;
-  optional State = 3;
+  int32 State = 3;
 }
 
 // 获取admin列表
