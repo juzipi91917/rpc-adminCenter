@@ -10,6 +10,7 @@ type (
 		Account   string `gorm:"column:account;type:varchar(255) not null;default:'';comment:账号"`
 		Password  string `gorm:"column:password;type:varchar(255) not null;default:'';comment:密码"`
 		Mobile    string `gorm:"column:mobile;type:varchar(16) not null;default:'';comment:手机号"`
+		Name      string `gorm:"column:name;type:varchar(255) not null;default:'';comment:名字"`
 	}
 )
 

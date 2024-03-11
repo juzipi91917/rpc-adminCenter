@@ -20,6 +20,13 @@ func NewAdminDao(svcCtx *svc.ServiceContext) *AdminDao {
 	}
 }
 
+// PageParameterConversion 分页参数转换
+func PageParameterConversion(page, pageSize int64) (offset, limit int) {
+	offset = int((page - 1) * pageSize)
+	limit = int(pageSize)
+	return
+}
+
 // Add -
 func (b *AdminDao) Add(ctx context.Context, add *entity.Admin) (id *int64, err error) {
 	k, err := b.DB.Insert(ctx, add)
@@ -29,4 +36,13 @@ func (b *AdminDao) Add(ctx context.Context, add *entity.Admin) (id *int64, err e
 // GetInfo -
 func (b *AdminDao) GetInfo(ctx context.Context, where *entity.Admin) (*entity.Admin, error) {
 	return b.DB.FindOne(ctx, where)
+}
+
+// GetPageList -
+func (f *AdminDao) GetPageList(ctx context.Context, page, pageSize int64, where *entity.Admin) (list []*entity.Admin, count int64, err error) {
+	offset, limit := PageParameterConversion(page, pageSize)
+	if err = f.DB.GetClient().Model(&entity.Admin{}).Where(where).Count(&count).Offset(offset).Limit(limit).Find(&list).Error; err != nil {
+		return nil, 0, err
+	}
+	return list, count, nil
 }

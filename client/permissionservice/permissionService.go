@@ -22,6 +22,7 @@ type (
 	AddPermissionResponse         = admin.AddPermissionResponse
 	AddRoleRequest                = admin.AddRoleRequest
 	AddRoleResponse               = admin.AddRoleResponse
+	AdminInfo                     = admin.AdminInfo
 	BindAdminRoleRequest          = admin.BindAdminRoleRequest
 	BindAdminRoleResponse         = admin.BindAdminRoleResponse
 	BindRolePermissionRequest     = admin.BindRolePermissionRequest

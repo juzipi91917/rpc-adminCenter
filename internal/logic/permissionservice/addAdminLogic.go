@@ -1,7 +1,11 @@
 package permissionservicelogic
 
 import (
+	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/commonx/result"
+	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter/internal/dao"
+	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter/internal/model/entity"
 	"context"
+	"golang.org/x/crypto/bcrypt"
 
 	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter/internal/svc"
 	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter/pb/admin"
@@ -13,18 +17,45 @@ type AddAdminLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
+	AdminDao *dao.AdminDao
 }
 
 func NewAddAdminLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddAdminLogic {
 	return &AddAdminLogic{
-		ctx:    ctx,
-		svcCtx: svcCtx,
-		Logger: logx.WithContext(ctx),
+		ctx:      ctx,
+		svcCtx:   svcCtx,
+		Logger:   logx.WithContext(ctx),
+		AdminDao: dao.NewAdminDao(svcCtx),
 	}
 }
 
 func (l *AddAdminLogic) AddAdmin(in *admin.AddAdminRequest) (*admin.AddAdminResponse, error) {
-	// todo: add your logic here and delete this line
+	pwdLen := len(in.Password)
+	if pwdLen <= 0 || pwdLen > 255 {
+		return nil, result.NewRpcError("密码长度不合法")
+	}
 
-	return &admin.AddAdminResponse{}, nil
+	password := in.Password
+
+	// bcrypt 加密 如果需要的话
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	password = string(hashedPassword)
+
+	id, err := l.AdminDao.Add(l.ctx, &entity.Admin{
+		Id:        &in.Id,
+		CreatedAt: &in.CreateAt,
+		UpdatedAt: &in.UpdateAt,
+		State:     &in.State,
+		Account:   in.Account,
+		Password:  password,
+		Mobile:    in.Mobile,
+		Name:      in.Name,
+	})
+	if err != nil {
+		return nil, result.NewRpcError("添加用户失败")
+	}
+
+	return &admin.AddAdminResponse{
+		Id: *id,
+	}, nil
 }

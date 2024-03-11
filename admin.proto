@@ -47,6 +47,17 @@ service AdminService {
 }
 
 
+message AdminInfo {
+  int64 Id = 1;
+  string Name = 2;
+  int64 CreateAt = 3;
+  int64 UpdateAt = 4;
+  int32 State = 5;
+  string Account = 6;
+  string Password = 7;
+  string Mobile = 8;
+}
+
 // 后台添加菜单
 message AddMenuRequest {}
 
@@ -102,10 +113,21 @@ message GetRoleListRequest {}
 message GetRoleListResponse {}
 
 // 后台添加后台用户
-message AddAdminRequest {}
+message AddAdminRequest {
+  int64 Id = 1;
+  string Name = 2;
+  int64 CreateAt = 3;
+  int64 UpdateAt = 4;
+  int32 State = 5;
+  string Account = 6;
+  string Password = 7;
+  string Mobile = 8;
+}
 
 // 后台添加后台用户
-message AddAdminResponse {}
+message AddAdminResponse {
+  int64 Id = 1;
+}
 
 // 后台修改用户信息
 message UpdateAdminRequest {}
@@ -113,11 +135,19 @@ message UpdateAdminRequest {}
 // 后台修改用户信息
 message UpdateAdminResponse {}
 
-// 后台修改用户信息
-message GetAdminListRequest {}
+// 获取admin列表
+message GetAdminListRequest {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  optional State = 3;
+}
 
-// 后台修改用户信息
-message GetAdminListResponse {}
+// 获取admin列表
+message GetAdminListResponse {
+  repeated AdminInfo List = 1;
+  int64 Total = 2;
+  int64 Page = 3;
+}
 
 // 后台获取用户所有角色
 message GetAdminRoleListRequest {}
