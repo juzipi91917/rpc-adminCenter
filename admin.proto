@@ -118,16 +118,33 @@ message GetMenuListResponse {
 }
 
 // 后台添加权限
-message AddPermissionRequest {}
+message AddPermissionRequest {
+  int32 State = 1;
+  int64 MenuId = 2;
+  string Name = 3;
+  string Route = 4;
+  string Remarks = 5;
+}
 
 // 后台添加权限
-message AddPermissionResponse {}
+message AddPermissionResponse {
+  int64 Id = 1;
+}
 
 // 后台修改权限
-message UpdatePermissionRequest {}
+message UpdatePermissionRequest {
+  optional int64 Id = 1;
+  optional int32 State = 2;
+  optional string Name = 3;
+  optional string Route = 4;
+  optional int64 MenuId = 5;
+  optional string Remarks = 6;
+}
 
 // 后台修改权限
-message UpdatePermissionResponse {}
+message UpdatePermissionResponse {
+  int64 row = 1;
+}
 
 // 后台获取权限列表
 message GetPermissionListRequest {}
