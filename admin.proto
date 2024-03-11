@@ -50,8 +50,8 @@ service AdminService {
 message AdminInfo {
   int64 Id = 1;
   string Name = 2;
-  int64 CreateAt = 3;
-  int64 UpdateAt = 4;
+  int64 CreatedAt = 3;
+  int64 UpdatedAt = 4;
   int32 State = 5;
   string Account = 6;
   string Password = 7;
@@ -59,10 +59,21 @@ message AdminInfo {
 }
 
 // 后台添加菜单
-message AddMenuRequest {}
+message AddMenuRequest {
+  int64 Id = 1;
+  int32 State = 2;
+  string Name = 3;
+  string Route = 4;
+  int64 Pid = 5;
+  string LevelIds = 6;
+  string Remarks = 7;
+
+}
 
 // 后台添加菜单
-message AddMenuResponse {}
+message AddMenuResponse {
+  int64 id = 1;
+}
 
 // 后台修改改单
 message UpdateMenuRequest {}
@@ -116,12 +127,10 @@ message GetRoleListResponse {}
 message AddAdminRequest {
   int64 Id = 1;
   string Name = 2;
-  int64 CreateAt = 3;
-  int64 UpdateAt = 4;
-  int32 State = 5;
-  string Account = 6;
-  string Password = 7;
-  string Mobile = 8;
+  int32 State = 3;
+  string Account = 4;
+  string Password = 5;
+  string Mobile = 6;
 }
 
 // 后台添加后台用户

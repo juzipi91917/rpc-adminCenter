@@ -6,6 +6,7 @@ import (
 	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter/internal/model/entity"
 	"context"
 	"golang.org/x/crypto/bcrypt"
+	"time"
 
 	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter/internal/svc"
 	"codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter/pb/admin"
@@ -41,10 +42,13 @@ func (l *AddAdminLogic) AddAdmin(in *admin.AddAdminRequest) (*admin.AddAdminResp
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	password = string(hashedPassword)
 
+	// 时间戳
+	t := time.Now().Unix()
+
 	id, err := l.AdminDao.Add(l.ctx, &entity.Admin{
 		Id:        &in.Id,
-		CreatedAt: &in.CreateAt,
-		UpdatedAt: &in.UpdateAt,
+		CreatedAt: &t,
+		UpdatedAt: &t,
 		State:     &in.State,
 		Account:   in.Account,
 		Password:  password,

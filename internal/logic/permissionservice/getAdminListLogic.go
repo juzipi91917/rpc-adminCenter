@@ -42,14 +42,14 @@ func (l *GetAdminListLogic) GetAdminList(in *admin.GetAdminListRequest) (*admin.
 
 	for _, a := range list {
 		res.List = append(res.List, &admin.AdminInfo{
-			Id:       *a.Id,
-			Name:     a.Name,
-			CreateAt: *a.CreatedAt,
-			UpdateAt: *a.UpdatedAt,
-			State:    *a.State,
-			Account:  a.Account,
-			Password: a.Password,
-			Mobile:   a.Mobile,
+			Id:        *a.Id,
+			Name:      a.Name,
+			CreatedAt: *a.CreatedAt,
+			UpdatedAt: *a.UpdatedAt,
+			State:     *a.State,
+			Account:   a.Account,
+			Password:  a.Password,
+			Mobile:    a.Mobile,
 		})
 	}
 
