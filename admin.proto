@@ -75,11 +75,21 @@ message AddMenuResponse {
   int64 id = 1;
 }
 
-// 后台修改改单
-message UpdateMenuRequest {}
+// 后台修改菜单
+message UpdateMenuRequest {
+  optional int64 Id = 1;
+  optional int32 State = 2;
+  optional string Name = 3;
+  optional string Route = 4;
+  optional int64 PId = 5;
+  optional string LevelIds = 6;
+  optional string Remarks = 7;
+}
 
-// 后台修改改单
-message UpdateMenuResponse {}
+// 后台修改菜单
+message UpdateMenuResponse {
+  int64 row = 1;
+}
 
 // 后台获取菜单列表
 message GetMenuListRequest {}
