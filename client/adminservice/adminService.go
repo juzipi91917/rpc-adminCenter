@@ -27,6 +27,8 @@ type (
 	BindAdminRoleResponse         = admin.BindAdminRoleResponse
 	BindRolePermissionRequest     = admin.BindRolePermissionRequest
 	BindRolePermissionResponse    = admin.BindRolePermissionResponse
+	ChangeAdminStateRequest       = admin.ChangeAdminStateRequest
+	ChangeAdminStateResponse      = admin.ChangeAdminStateResponse
 	DelAdminRoleRequest           = admin.DelAdminRoleRequest
 	DelAdminRoleResponse          = admin.DelAdminRoleResponse
 	DelRolePermissionRequest      = admin.DelRolePermissionRequest

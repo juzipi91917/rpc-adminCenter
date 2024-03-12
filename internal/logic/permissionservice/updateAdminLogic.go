@@ -60,6 +60,11 @@ func (l *UpdateAdminLogic) UpdateAdmin(in *admin.UpdateAdminRequest) (*admin.Upd
 		where.Name = *in.Name
 	}
 
+	// 逻辑删除
+	if in.IsDeleted != nil {
+		where.IsDeleted = in.IsDeleted
+	}
+
 	// set update time
 	t := time.Now().Unix()
 	where.UpdatedAt = &t

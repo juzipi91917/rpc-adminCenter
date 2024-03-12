@@ -27,6 +27,8 @@ type (
 	BindAdminRoleResponse         = admin.BindAdminRoleResponse
 	BindRolePermissionRequest     = admin.BindRolePermissionRequest
 	BindRolePermissionResponse    = admin.BindRolePermissionResponse
+	ChangeAdminStateRequest       = admin.ChangeAdminStateRequest
+	ChangeAdminStateResponse      = admin.ChangeAdminStateResponse
 	DelAdminRoleRequest           = admin.DelAdminRoleRequest
 	DelAdminRoleResponse          = admin.DelAdminRoleResponse
 	DelRolePermissionRequest      = admin.DelRolePermissionRequest
@@ -75,6 +77,7 @@ type (
 		AddAdmin(ctx context.Context, in *AddAdminRequest, opts ...grpc.CallOption) (*AddAdminResponse, error)
 		UpdateAdmin(ctx context.Context, in *UpdateAdminRequest, opts ...grpc.CallOption) (*UpdateAdminResponse, error)
 		GetAdminList(ctx context.Context, in *GetAdminListRequest, opts ...grpc.CallOption) (*GetAdminListResponse, error)
+		ChangeAdminState(ctx context.Context, in *ChangeAdminStateRequest, opts ...grpc.CallOption) (*ChangeAdminStateResponse, error)
 		GetAdminRoleList(ctx context.Context, in *GetAdminRoleListRequest, opts ...grpc.CallOption) (*GetAdminRoleListResponse, error)
 		GetRolePermissionList(ctx context.Context, in *GetRolePermissionListRequest, opts ...grpc.CallOption) (*GetRolePermissionListResponse, error)
 		BindAdminRole(ctx context.Context, in *BindAdminRoleRequest, opts ...grpc.CallOption) (*BindAdminRoleResponse, error)
@@ -152,6 +155,11 @@ func (m *defaultPermissionService) UpdateAdmin(ctx context.Context, in *UpdateAd
 func (m *defaultPermissionService) GetAdminList(ctx context.Context, in *GetAdminListRequest, opts ...grpc.CallOption) (*GetAdminListResponse, error) {
 	client := admin.NewPermissionServiceClient(m.cli.Conn())
 	return client.GetAdminList(ctx, in, opts...)
+}
+
+func (m *defaultPermissionService) ChangeAdminState(ctx context.Context, in *ChangeAdminStateRequest, opts ...grpc.CallOption) (*ChangeAdminStateResponse, error) {
+	client := admin.NewPermissionServiceClient(m.cli.Conn())
+	return client.ChangeAdminState(ctx, in, opts...)
 }
 
 func (m *defaultPermissionService) GetAdminRoleList(ctx context.Context, in *GetAdminRoleListRequest, opts ...grpc.CallOption) (*GetAdminRoleListResponse, error) {

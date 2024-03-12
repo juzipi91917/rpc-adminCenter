@@ -38,7 +38,7 @@ func (l *AddAdminLogic) AddAdmin(in *admin.AddAdminRequest) (*admin.AddAdminResp
 
 	password := in.Password
 
-	// bcrypt 加密 如果需要的话
+	// 以下两行为 `bcrypt` 加密 如果需要的话
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	password = string(hashedPassword)
 

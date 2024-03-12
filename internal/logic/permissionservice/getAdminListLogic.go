@@ -28,7 +28,7 @@ func NewGetAdminListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetA
 
 func (l *GetAdminListLogic) GetAdminList(in *admin.GetAdminListRequest) (*admin.GetAdminListResponse, error) {
 
-	list, count, err := l.AdminDao.GetPageList(l.ctx, in.GetPage(), in.GetPageSize(), &entity.Admin{State: &in.State})
+	list, count, err := l.AdminDao.GetPageList(l.ctx, in.GetPage(), in.GetPageSize(), &entity.Admin{State: in.State, IsDeleted: in.IsDeleted})
 
 	if err != nil {
 		l.Errorf("获取管理员列表失败,err:%+v", err)

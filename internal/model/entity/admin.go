@@ -11,6 +11,7 @@ type (
 		Password  string `gorm:"column:password;type:varchar(255) not null;default:'';comment:密码"`
 		Mobile    string `gorm:"column:mobile;type:varchar(16) not null;default:'';comment:手机号"`
 		Name      string `gorm:"column:name;type:varchar(255) not null;default:'';comment:名字"`
+		IsDeleted *int32 `gorm:"column:is_deleted;type:tinyint(4) not null;default:0;comment:是否删除 0否 1是"`
 	}
 )
 

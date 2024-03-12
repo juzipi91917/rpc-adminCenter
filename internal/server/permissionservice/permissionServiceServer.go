@@ -82,6 +82,11 @@ func (s *PermissionServiceServer) GetAdminList(ctx context.Context, in *admin.Ge
 	return l.GetAdminList(in)
 }
 
+func (s *PermissionServiceServer) ChangeAdminState(ctx context.Context, in *admin.ChangeAdminStateRequest) (*admin.ChangeAdminStateResponse, error) {
+	l := permissionservicelogic.NewChangeAdminStateLogic(ctx, s.svcCtx)
+	return l.ChangeAdminState(in)
+}
+
 func (s *PermissionServiceServer) GetAdminRoleList(ctx context.Context, in *admin.GetAdminRoleListRequest) (*admin.GetAdminRoleListResponse, error) {
 	l := permissionservicelogic.NewGetAdminRoleListLogic(ctx, s.svcCtx)
 	return l.GetAdminRoleList(in)

@@ -179,10 +179,16 @@ message GetPermissionListResponse {
 }
 
 // 后台添加角色
-message AddRoleRequest {}
+message AddRoleRequest {
+  int32 State = 1;
+  string Name = 2;
+  string Remarks = 3;
+}
 
 // 后台添加菜单
-message AddRoleResponse {}
+message AddRoleResponse {
+  int64 Id = 1;
+}
 
 // 后台修改角色
 message UpdateRoleRequest {}
@@ -219,6 +225,7 @@ message UpdateAdminRequest {
   optional string Password = 5;
   optional string Mobile = 6;
   optional string Name = 7;
+  optional int32 IsDeleted = 8;
 }
 
 // 后台修改用户信息
@@ -229,8 +236,9 @@ message UpdateAdminResponse {
 // 获取admin列表
 message GetAdminListRequest {
   int64 Page = 1;
-  int64 PageSize = 2;
-  int32 State = 3;
+  optional int32 IsDeleted = 2;
+  int64 PageSize = 3;
+  optional int32 State = 4;
 }
 
 // 获取admin列表
@@ -276,6 +284,16 @@ message DelRolePermissionRequest {}
 // 后台删除角色权限
 message DelRolePermissionResponse {}
 
+// 改变用户状态  State字段
+message ChangeAdminStateRequest {
+  optional int64 Id = 1;
+}
+// 改变用户状态
+message ChangeAdminStateResponse {
+  int64 Row = 1;
+}
+
+
 
 
 // 后台权限管理相关服务
@@ -292,6 +310,7 @@ service PermissionService {
   rpc AddAdmin(AddAdminRequest) returns(AddAdminResponse); // 添加后台用户
   rpc UpdateAdmin(UpdateAdminRequest) returns(UpdateAdminResponse); // 修改用户信息
   rpc GetAdminList(GetAdminListRequest) returns(GetAdminListResponse); // 修改用户信息
+  rpc ChangeAdminState(ChangeAdminStateRequest) returns(ChangeAdminStateResponse); // 改变用户状态
 
   rpc GetAdminRoleList(GetAdminRoleListRequest) returns(GetAdminRoleListResponse); // 获取用户所有角色
   rpc GetRolePermissionList(GetRolePermissionListRequest) returns(GetRolePermissionListResponse); // 获取角色所有权限
