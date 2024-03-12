@@ -57,8 +57,8 @@ func (f *AdminDao) GetPageList(ctx context.Context, page, pageSize int64, where 
 }
 
 // Update -
-func (f *AdminDao) Update(ctx context.Context, where, date *entity.Admin) (row int64, err error) {
-	tx := f.DB.GetClient().Where(where).Updates(date)
+func (f *AdminDao) Update(ctx context.Context, where, data *entity.Admin) (row int64, err error) {
+	tx := f.DB.GetClient().Where(where).Updates(data)
 	return tx.RowsAffected, tx.Error
 }
 
@@ -93,7 +93,7 @@ func (b *AdminDao) ChangeState(ctx context.Context, userID int64) (row int64, er
 	return row, nil
 }
 
-// GetAdminRoleList 根据用户id查询用户的所有角色信息 返回值为role表的id,name,remarks,state字段
+// GetAdminRoleList 根据用户id查询用户的所有角色信息 返回值为一个装有 role表的id,name,remarks,state字段 的结构体列表
 func (f *AdminDao) GetAdminRoleList(ctx context.Context, adminId *int64) ([]*AdminRole, int64, error) {
 	// 定义一个切片用于装载查询结果
 	var adminRoleList []*AdminRole

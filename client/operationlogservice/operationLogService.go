@@ -56,6 +56,7 @@ type (
 	RefreshTokenRequest           = admin.RefreshTokenRequest
 	RefreshTokenResponse          = admin.RefreshTokenResponse
 	RoleInfo                      = admin.RoleInfo
+	RolePermissionInfo            = admin.RolePermissionInfo
 	UpdateAdminRequest            = admin.UpdateAdminRequest
 	UpdateAdminResponse           = admin.UpdateAdminResponse
 	UpdateMenuRequest             = admin.UpdateMenuRequest

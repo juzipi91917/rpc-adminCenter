@@ -41,7 +41,7 @@ func (f *PermissionDao) GetPageList(ctx context.Context, page, pageSize int64, w
 }
 
 // Update -
-func (f *PermissionDao) Update(ctx context.Context, where, date *entity.Permission) (row int64, err error) {
-	tx := f.DB.GetClient().Where(where).Updates(date)
+func (f *PermissionDao) Update(ctx context.Context, where, data *entity.Permission) (row int64, err error) {
+	tx := f.DB.GetClient().Where(where).Updates(data)
 	return tx.RowsAffected, tx.Error
 }

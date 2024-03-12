@@ -20,6 +20,16 @@ func NewRoleDao(svcCtx *svc.ServiceContext) *RoleDao {
 	}
 }
 
+// 用于保存角色权限的结构体
+type RolePermission struct {
+	Id      int64  `json:"id" gorm:"column:id"`
+	State   int32  `json:"state" gorm:"column:state"`
+	MenuId  int64  `json:"menu_id" gorm:"column:menu_id"`
+	Name    string `json:"name" gorm:"column:name"`
+	Route   string `json:"route" gorm:"column:route"`
+	Remarks string `json:"remarks" gorm:"column:remarks"`
+}
+
 // Add -
 func (b *RoleDao) Add(ctx context.Context, add *entity.Role) (id *int64, err error) {
 	k, err := b.DB.Insert(ctx, add)
@@ -41,7 +51,31 @@ func (f *RoleDao) GetPageList(ctx context.Context, page, pageSize int64, where *
 }
 
 // Update -
-func (f *RoleDao) Update(ctx context.Context, where, date *entity.Role) (row int64, err error) {
-	tx := f.DB.GetClient().Where(where).Updates(date)
+func (f *RoleDao) Update(ctx context.Context, where, data *entity.Role) (row int64, err error) {
+	tx := f.DB.GetClient().Where(where).Updates(data)
 	return tx.RowsAffected, tx.Error
+}
+
+// GetRolePermission 根据Role表id查询角色的所有权限信息 返回值为一个装有 permission表的id,state, menu_id, name, route, remarks的结构体列表
+func (f *RoleDao) GetRolePermission(ctx context.Context, roleId *int64) ([]*RolePermission, int64, error) {
+	// 定义一个切片用于装载查询结果
+	var rolePermissionList []*RolePermission
+
+	// 执行查询，并将结果装载到切片中
+	err := f.DB.GetClient().Debug().
+		Model(&entity.Role{}).
+		Select("p.id, p.state, p.menu_id, p.name, p.route, p.remarks").
+		Joins("JOIN role_permission rp ON role.id = rp.role_id").
+		Joins("JOIN permission p ON rp.permission_id =p.id").
+		Where("role.id = ?", roleId).
+		Find(&rolePermissionList).Error
+
+	if err != nil {
+		return nil, 0, err
+	}
+
+	// 获取查询结果的数量
+	count := int64(len(rolePermissionList))
+
+	return rolePermissionList, count, nil
 }

@@ -41,7 +41,7 @@ func (f *MenuDao) GetPageList(ctx context.Context, page, pageSize int64, where *
 }
 
 // Update -
-func (f *MenuDao) Update(ctx context.Context, where, date *entity.Menu) (row int64, err error) {
-	tx := f.DB.GetClient().Where(where).Updates(date)
+func (f *MenuDao) Update(ctx context.Context, where, data *entity.Menu) (row int64, err error) {
+	tx := f.DB.GetClient().Where(where).Updates(data)
 	return tx.RowsAffected, tx.Error
 }

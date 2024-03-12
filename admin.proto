@@ -1,15 +1,15 @@
 syntax = "proto3";
 
 package adminCenter;
-option go_package="./admin";
+option go_package = "./admin";
 
 message Empty {}
 
 
 // 后台用户登录
 message LogOnRequest {
-    int64 Account = 1; // 账号
-    string Password = 2; // 密码
+  int64 Account = 1; // 账号
+  string Password = 2; // 密码
 }
 
 // 后台用户登录
@@ -98,6 +98,15 @@ message AdminRoleInfo {
   string Name = 2;
   string Remarks = 3;
   int32 State = 4;
+}
+
+message RolePermissionInfo {
+  int64 Id = 1;
+  int32 State = 2;
+  int64 menuId = 3;
+  string Name = 4;
+  string Route = 5;
+  string Remarks = 6;
 }
 
 
@@ -290,34 +299,59 @@ message GetAdminRoleListResponse {
 }
 
 // 后台获取角色所有权限
-message GetRolePermissionListRequest {}
+message GetRolePermissionListRequest {
+  optional int64 Id = 1;
+}
 
 // 后台获取角色所有权限
-message GetRolePermissionListResponse {}
+message GetRolePermissionListResponse {
+  repeated RolePermissionInfo List = 1;
+  int64 Total = 2;
+}
 
 // 后台给用户分配角色
-message BindAdminRoleRequest {}
+message BindAdminRoleRequest {
+  optional int64 AdminId = 1;
+  optional int64 RoleId = 2;
+}
 
 // 后台给用户分配角色
-message BindAdminRoleResponse {}
+message BindAdminRoleResponse {
+  int64 Row = 1;
+}
 
 // 后台给角色分配权限
-message BindRolePermissionRequest {}
+message BindRolePermissionRequest {
+  optional int64 RoleId = 1;
+  optional int64 PermissionId = 2;
+}
 
 // 后台给角色分配权限
-message BindRolePermissionResponse {}
+message BindRolePermissionResponse {
+  int64 Row = 1;
+}
 
 // 后台删除用户角色
-message DelAdminRoleRequest {}
+message DelAdminRoleRequest {
+  optional int64 AdminId = 1;
+  optional int64 RoleId = 2;
+}
 
 // 后台删除用户角色
-message DelAdminRoleResponse {}
+message DelAdminRoleResponse {
+  int64 Row = 1;
+}
 
 // 后台删除角色权限
-message DelRolePermissionRequest {}
+message DelRolePermissionRequest {
+  optional int64 RoleId = 1;
+  optional int64 PermissionId = 2;
+}
 
 // 后台删除角色权限
-message DelRolePermissionResponse {}
+message DelRolePermissionResponse {
+  int64 Row = 1;
+}
 
 // 改变用户状态  State字段
 message ChangeAdminStateRequest {
