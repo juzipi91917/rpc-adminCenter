@@ -23,6 +23,7 @@ type (
 	AddRoleRequest                = admin.AddRoleRequest
 	AddRoleResponse               = admin.AddRoleResponse
 	AdminInfo                     = admin.AdminInfo
+	AdminRoleInfo                 = admin.AdminRoleInfo
 	BindAdminRoleRequest          = admin.BindAdminRoleRequest
 	BindAdminRoleResponse         = admin.BindAdminRoleResponse
 	BindRolePermissionRequest     = admin.BindRolePermissionRequest
@@ -54,6 +55,7 @@ type (
 	PermissionInfo                = admin.PermissionInfo
 	RefreshTokenRequest           = admin.RefreshTokenRequest
 	RefreshTokenResponse          = admin.RefreshTokenResponse
+	RoleInfo                      = admin.RoleInfo
 	UpdateAdminRequest            = admin.UpdateAdminRequest
 	UpdateAdminResponse           = admin.UpdateAdminResponse
 	UpdateMenuRequest             = admin.UpdateMenuRequest

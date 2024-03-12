@@ -14,6 +14,14 @@ type AdminDao struct {
 	Redis *redis.Client
 }
 
+// 用于保存查用户角色信息的结构体
+type AdminRole struct {
+	ID      int64  `json:"id" gorm:"column:id"`
+	Name    string `json:"name" gorm:"column:name"`
+	Remarks string `json:"remarks" gorm:"column:remarks"`
+	State   int32  `json:"state" gorm:"column:state"`
+}
+
 func NewAdminDao(svcCtx *svc.ServiceContext) *AdminDao {
 	return &AdminDao{
 		DB:    mysqlx.NewDao[entity.Admin](svcCtx.DBCli),
@@ -83,4 +91,27 @@ func (b *AdminDao) ChangeState(ctx context.Context, userID int64) (row int64, er
 	}
 
 	return row, nil
+}
+
+// GetAdminRoleList 根据用户id查询用户的所有角色信息 返回值为role表的id,name,remarks,state字段
+func (f *AdminDao) GetAdminRoleList(ctx context.Context, adminId *int64) ([]*AdminRole, int64, error) {
+	// 定义一个切片用于装载查询结果
+	var adminRoleList []*AdminRole
+
+	// 执行查询，并将结果装载到切片中
+	err := f.DB.GetClient().Debug().Model(&entity.Admin{}).
+		Select("r.id, r.name, r.remarks, r.state").
+		Joins("JOIN admin_role ar ON admin.id = ar.a_id").
+		Joins("JOIN role r ON ar.p_id = r.id").
+		Where("admin.id = ?", adminId).
+		Find(&adminRoleList).Error
+
+	if err != nil {
+		return nil, 0, err
+	}
+
+	// 获取查询结果的数量
+	count := int64(len(adminRoleList))
+
+	return adminRoleList, count, nil
 }

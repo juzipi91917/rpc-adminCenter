@@ -83,7 +83,22 @@ message PermissionInfo {
   string Remarks = 8;
 }
 
+message RoleInfo {
+  int64 Id = 1;
+  int64 CreatedAt = 2;
+  int64 UpdatedAt = 3;
+  int32 State = 4;
+  string Name = 5;
+  string Remarks = 6;
+}
 
+// 用于封装某用户的所有角色信息
+message AdminRoleInfo {
+  int64 Id = 1;
+  string Name = 2;
+  string Remarks = 3;
+  int32 State = 4;
+}
 
 
 
@@ -125,7 +140,7 @@ message UpdateMenuResponse {
 message GetMenuListRequest {
   int64 Page = 1;
   int64 PageSize = 2;
-  int32 Status = 3;
+  int32 State = 3;
 }
 
 // 后台获取菜单列表
@@ -168,7 +183,7 @@ message UpdatePermissionResponse {
 message GetPermissionListRequest {
   int64 Page = 1;
   int64 PageSize = 2;
-  int32 Status = 3;
+  optional int32 State = 3;
 }
 
 // 后台添加角色
@@ -191,16 +206,31 @@ message AddRoleResponse {
 }
 
 // 后台修改角色
-message UpdateRoleRequest {}
+message UpdateRoleRequest {
+  optional int64 Id = 1;
+  optional int32 State = 2;
+  optional string Name = 3;
+  optional string Remarks = 4;
+}
 
 // 后台修改角色
-message UpdateRoleResponse {}
+message UpdateRoleResponse {
+  int64 Row = 1;
+}
 
 // 后台获取角色列表
-message GetRoleListRequest {}
+message GetRoleListRequest {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  optional int32 State = 3;
+}
 
 // 后台获取角色列表
-message GetRoleListResponse {}
+message GetRoleListResponse {
+  repeated RoleInfo List = 1;
+  int64 Total = 2;
+  int64 Page = 3;
+}
 
 // 后台添加后台用户
 message AddAdminRequest {
@@ -249,10 +279,15 @@ message GetAdminListResponse {
 }
 
 // 后台获取用户所有角色
-message GetAdminRoleListRequest {}
+message GetAdminRoleListRequest {
+  optional int64 Id = 1;
+}
 
 // 后台获取用户所有角色
-message GetAdminRoleListResponse {}
+message GetAdminRoleListResponse {
+  repeated AdminRoleInfo List = 1;
+  int64 Total = 2;
+}
 
 // 后台获取角色所有权限
 message GetRolePermissionListRequest {}

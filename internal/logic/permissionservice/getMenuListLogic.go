@@ -29,7 +29,7 @@ func NewGetMenuListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetMe
 }
 
 func (l *GetMenuListLogic) GetMenuList(in *admin.GetMenuListRequest) (*admin.GetMenuListResponse, error) {
-	list, count, err := l.MenuDao.GetPageList(l.ctx, in.GetPage(), in.GetPageSize(), &entity.Menu{State: &in.Status})
+	list, count, err := l.MenuDao.GetPageList(l.ctx, in.GetPage(), in.GetPageSize(), &entity.Menu{State: &in.State})
 
 	if err != nil {
 		l.Errorf("获取菜单列表失败,err:%+v", err)

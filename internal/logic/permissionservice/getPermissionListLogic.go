@@ -29,7 +29,7 @@ func NewGetPermissionListLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 }
 
 func (l *GetPermissionListLogic) GetPermissionList(in *admin.GetPermissionListRequest) (*admin.GetPermissionListResponse, error) {
-	list, count, err := l.PermissionDao.GetPageList(l.ctx, in.Page, in.PageSize, &entity.Permission{State: &in.Status})
+	list, count, err := l.PermissionDao.GetPageList(l.ctx, in.Page, in.PageSize, &entity.Permission{State: in.State})
 
 	if err != nil {
 		l.Errorf("获取权限列表失败,err:%+v", err)
