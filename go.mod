@@ -2,7 +2,7 @@ module codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter
 
 go 1.21
 
-toolchain go1.21.6
+
 
 require (
 	codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/commonx v1.0.33
