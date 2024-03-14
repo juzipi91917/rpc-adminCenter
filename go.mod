@@ -1,8 +1,6 @@
 module codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/rpc-adminCenter
 
-go 1.21
-
-
+go 1.20
 
 require (
 	codeup.aliyun.com/64df1ec7dba61e96ebf612bf/jiandaoshou/commonx v1.0.33
